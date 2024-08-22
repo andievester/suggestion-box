@@ -1,0 +1,48 @@
+@import "../../variables.css";
+
+.comment {
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.no-comments-message {
+  display: flex;
+  margin-top: 0.25rem;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-style: italic;
+}
+
+.suggestion-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding-top: 0.5rem;
+}
+
+.suggestion-content {
+  flex: 1;
+  overflow-y: scroll;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+}
+
+.comment-input {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  background-color: white;
+  padding: 0.5rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.submit-comment-btn {
+  color: white;
+  background: var(--bs-primary);
+}
