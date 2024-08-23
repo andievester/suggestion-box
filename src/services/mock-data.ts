@@ -1,23 +1,22 @@
-import { UserSuggestion } from "./suggestion.service";
+import { UserSuggestion } from "../types/suggestion.interfaces";
+import { generateId } from "../utils/data-format-utils";
 
-export const getFirstSuggestion = () => testSuggestions[0];
-
-export const testSuggestions: UserSuggestion[] = [
+export const mockSuggestions: UserSuggestion[] = [
   {
-    id: "suggestion-1",
+    id: 111222333,
     title: "Add Dark Mode",
     description: "Implement a dark mode option to reduce eye strain.",
     timestamp: new Date("2024-08-01T10:00:00Z"),
     author: {
-      id: "author-1",
+      id: generateId(),
       firstName: "Me",
     },
     comments: [
       {
-        id: "comment-1",
-        suggestionId: "suggestion-1",
+        id: generateId(),
+        suggestionId: 111222333,
         author: {
-          id: "author-2",
+          id: generateId(),
           firstName: "Bob",
           lastName: "Smith",
         },
@@ -25,10 +24,10 @@ export const testSuggestions: UserSuggestion[] = [
         timestamp: new Date("2024-08-01T11:00:00Z"),
       },
       {
-        id: "comment-2",
-        suggestionId: "suggestion-1",
+        id: generateId(),
+        suggestionId: 111222333,
         author: {
-          id: "author-3",
+          id: generateId(),
           firstName: "Alice",
           lastName: "Johnson",
         },
@@ -36,20 +35,21 @@ export const testSuggestions: UserSuggestion[] = [
         timestamp: new Date("2024-08-01T11:10:00Z"),
       },
       {
-        id: "comment-3",
-        suggestionId: "suggestion-1",
+        id: generateId(),
+        suggestionId: 111222333,
         author: {
-          id: "author-4",
+          id: generateId(),
           firstName: "Me",
         },
-        content: "I agree! My eyes would really appreciate a dark mode.",
+        content:
+          "I agree! My eyes would really appreciate a dark mode. In fact, I really wanted to implement a dark mode for this project in particular, but I ran out of time, and honestly spent way too much time fiddling with the light color scheme. Typical...",
         timestamp: new Date("2024-08-01T11:15:00Z"),
       },
       {
-        id: "comment-4",
-        suggestionId: "suggestion-1",
+        id: generateId(),
+        suggestionId: 111222333,
         author: {
-          id: "author-5",
+          id: generateId(),
           firstName: "David",
           lastName: "Wilson",
         },
@@ -57,10 +57,10 @@ export const testSuggestions: UserSuggestion[] = [
         timestamp: new Date("2024-08-01T11:20:00Z"),
       },
       {
-        id: "comment-5",
-        suggestionId: "suggestion-1",
+        id: generateId(),
+        suggestionId: 111222333,
         author: {
-          id: "author-6",
+          id: generateId(),
           firstName: "Eva",
           lastName: "Miller",
         },
@@ -68,10 +68,10 @@ export const testSuggestions: UserSuggestion[] = [
         timestamp: new Date("2024-08-01T11:25:00Z"),
       },
       {
-        id: "comment-6",
-        suggestionId: "suggestion-1",
+        id: generateId(),
+        suggestionId: 111222333,
         author: {
-          id: "author-7",
+          id: generateId(),
           firstName: "Frank",
           lastName: "Garcia",
         },
@@ -79,10 +79,10 @@ export const testSuggestions: UserSuggestion[] = [
         timestamp: new Date("2024-08-01T11:30:00Z"),
       },
       {
-        id: "comment-7",
-        suggestionId: "suggestion-1",
+        id: generateId(),
+        suggestionId: 111222333,
         author: {
-          id: "author-8",
+          id: generateId(),
           firstName: "Grace",
           lastName: "Martinez",
         },
@@ -90,10 +90,10 @@ export const testSuggestions: UserSuggestion[] = [
         timestamp: new Date("2024-08-01T11:35:00Z"),
       },
       {
-        id: "comment-8",
-        suggestionId: "suggestion-1",
+        id: generateId(),
+        suggestionId: 111222333,
         author: {
-          id: "author-9",
+          id: generateId(),
           firstName: "Henry",
           lastName: "Robinson",
         },
@@ -102,10 +102,10 @@ export const testSuggestions: UserSuggestion[] = [
         timestamp: new Date("2024-08-01T11:40:00Z"),
       },
       {
-        id: "comment-9",
-        suggestionId: "suggestion-1",
+        id: generateId(),
+        suggestionId: 111222333,
         author: {
-          id: "author-10",
+          id: generateId(),
           firstName: "Ivy",
           lastName: "Clark",
         },
@@ -114,20 +114,20 @@ export const testSuggestions: UserSuggestion[] = [
         timestamp: new Date("2024-08-01T11:45:00Z"),
       },
       {
-        id: "comment-10",
-        suggestionId: "suggestion-1",
+        id: generateId(),
+        suggestionId: 111222333,
         author: {
-          id: "author-11",
+          id: generateId(),
           firstName: "Me",
         },
-        content: "I can't wait for this to be implemented.",
+        content: "Maybe I'll implement it when I get back.",
         timestamp: new Date("2024-08-01T11:50:00Z"),
       },
       {
-        id: "comment-11",
-        suggestionId: "suggestion-1",
+        id: generateId(),
+        suggestionId: 111222333,
         author: {
-          id: "author-12",
+          id: generateId(),
           firstName: "Kathy",
           lastName: "Lee",
         },
@@ -135,10 +135,10 @@ export const testSuggestions: UserSuggestion[] = [
         timestamp: new Date("2024-08-01T11:55:00Z"),
       },
       {
-        id: "comment-12",
-        suggestionId: "suggestion-1",
+        id: generateId(),
+        suggestionId: 111222333,
         author: {
-          id: "author-13",
+          id: generateId(),
           firstName: "Liam",
           lastName: "Walker",
         },
@@ -146,157 +146,47 @@ export const testSuggestions: UserSuggestion[] = [
         timestamp: new Date("2024-08-01T12:00:00Z"),
       },
       {
-        id: "comment-13",
-        suggestionId: "suggestion-1",
+        id: generateId(),
+        suggestionId: 111222333,
         author: {
-          id: "author-14",
+          id: generateId(),
           firstName: "Mia",
           lastName: "Harris",
         },
         content: "Dark mode is long overdue.",
         timestamp: new Date("2024-08-01T12:05:00Z"),
       },
-      {
-        id: "comment-14",
-        suggestionId: "suggestion-1",
-        author: {
-          id: "author-15",
-          firstName: "Noah",
-          lastName: "Young",
-        },
-        content: "This would make the app so much better.",
-        timestamp: new Date("2024-08-01T12:10:00Z"),
-      },
-      {
-        id: "comment-15",
-        suggestionId: "suggestion-1",
-        author: {
-          id: "author-16",
-          firstName: "Olivia",
-          lastName: "Allen",
-        },
-        content: "Please make this happen!",
-        timestamp: new Date("2024-08-01T12:15:00Z"),
-      },
-      {
-        id: "comment-16",
-        suggestionId: "suggestion-1",
-        author: {
-          id: "author-17",
-          firstName: "Paul",
-          lastName: "King",
-        },
-        content: "Dark mode is a must!",
-        timestamp: new Date("2024-08-01T12:20:00Z"),
-      },
-      {
-        id: "comment-17",
-        suggestionId: "suggestion-1",
-        author: {
-          id: "author-18",
-          firstName: "Quinn",
-          lastName: "Wright",
-        },
-        content: "Can't wait for this feature.",
-        timestamp: new Date("2024-08-01T12:25:00Z"),
-      },
-      {
-        id: "comment-18",
-        suggestionId: "suggestion-1",
-        author: {
-          id: "author-19",
-          firstName: "Ruby",
-          lastName: "Lopez",
-        },
-        content: "This would be very useful, especially at night.",
-        timestamp: new Date("2024-08-01T12:30:00Z"),
-      },
-      {
-        id: "comment-19",
-        suggestionId: "suggestion-1",
-        author: {
-          id: "author-20",
-          firstName: "Sam",
-          lastName: "Hill",
-        },
-        content: "Dark mode is needed for sure.",
-        timestamp: new Date("2024-08-01T12:35:00Z"),
-      },
-      {
-        id: "comment-20",
-        suggestionId: "suggestion-1",
-        author: {
-          id: "author-21",
-          firstName: "Tina",
-          lastName: "Scott",
-        },
-        content: "I've been waiting for dark mode forever.",
-        timestamp: new Date("2024-08-01T12:40:00Z"),
-      },
-      {
-        id: "comment-21",
-        suggestionId: "suggestion-1",
-        author: {
-          id: "author-22",
-          firstName: "Ursula",
-          lastName: "Adams",
-        },
-        content: "Dark mode would make the app look so much better.",
-        timestamp: new Date("2024-08-01T12:45:00Z"),
-      },
-      {
-        id: "comment-22",
-        suggestionId: "suggestion-1",
-        author: {
-          id: "author-23",
-          firstName: "Victor",
-          lastName: "Baker",
-        },
-        content: "Can't wait for dark mode!",
-        timestamp: new Date("2024-08-01T12:50:00Z"),
-      },
-      {
-        id: "comment-23",
-        suggestionId: "suggestion-1",
-        author: {
-          id: "author-24",
-          firstName: "Wendy",
-          lastName: "Clark",
-        },
-        content: "Dark mode is a must-have!",
-        timestamp: new Date("2024-08-01T12:55:00Z"),
-      },
     ],
   },
   {
-    id: "suggestion-2",
+    id: 222333444,
     title: "Improve Search Functionality",
     description: "Enhance the search feature to include filtering and sorting.",
     timestamp: new Date("2024-08-02T14:30:00Z"),
     author: {
-      id: "author-3",
+      id: generateId(),
       firstName: "Charlie",
       lastName: "Brown",
     },
     comments: [],
   },
   {
-    id: "suggestion-3",
+    id: 333444555,
     title: "Add User Profiles",
     description:
       "Allow users to create and manage their own profiles with avatars and bios.",
     timestamp: new Date("2024-08-03T09:45:00Z"),
     author: {
-      id: "author-4",
+      id: generateId(),
       firstName: "Dana",
       lastName: "Lee",
     },
     comments: [
       {
-        id: "comment-2",
-        suggestionId: "suggestion-3",
+        id: generateId(),
+        suggestionId: 333444555,
         author: {
-          id: "author-1",
+          id: generateId(),
           firstName: "Alice",
           lastName: "Johnson",
         },
@@ -307,12 +197,12 @@ export const testSuggestions: UserSuggestion[] = [
     ],
   },
   {
-    id: "suggestion-4",
+    id: 444555666,
     title: "Enable Offline Mode",
     description: "Allow users to access certain features and content offline.",
     timestamp: new Date("2024-08-04T16:00:00Z"),
     author: {
-      id: "author-5",
+      id: generateId(),
       firstName: "Eve",
       lastName: "Davis",
       title: "Ms.",
@@ -320,12 +210,12 @@ export const testSuggestions: UserSuggestion[] = [
     comments: [],
   },
   {
-    id: "suggestion-5",
+    id: 666777888,
     title: "Integrate Social Media Sharing",
     description: "Add options to share content on social media platforms.",
     timestamp: new Date("2024-08-05T12:20:00Z"),
     author: {
-      id: "author-6",
+      id: generateId(),
       firstName: "Frank",
       lastName: "Miller",
       title: "Mr.",
@@ -333,23 +223,23 @@ export const testSuggestions: UserSuggestion[] = [
     comments: [],
   },
   {
-    id: "suggestion-6",
+    id: 777888999,
     title: "Add Notification System",
     description:
       "Implement a notification system for important updates and messages.",
     timestamp: new Date("2024-08-06T08:30:00Z"),
     author: {
-      id: "author-7",
+      id: generateId(),
       firstName: "Grace",
       lastName: "Wilson",
       title: "Dr.",
     },
     comments: [
       {
-        id: "comment-3",
-        suggestionId: "suggestion-6",
+        id: generateId(),
+        suggestionId: 777888999,
         author: {
-          id: "author-8",
+          id: generateId(),
           firstName: "Hank",
           lastName: "Taylor",
         },
@@ -360,35 +250,35 @@ export const testSuggestions: UserSuggestion[] = [
     ],
   },
   {
-    id: "suggestion-7",
+    id: 888999000,
     title: "Enhance Mobile Responsiveness",
     description:
       "Improve the mobile responsiveness of the website for better user experience on smartphones and tablets.",
     timestamp: new Date("2024-08-07T11:45:00Z"),
     author: {
-      id: "author-2",
+      id: generateId(),
       firstName: "Bob",
       lastName: "Smith",
     },
     comments: [],
   },
   {
-    id: "suggestion-8",
+    id: 666555444,
     title: "Add Multi-language Support",
     description:
       "Provide options to switch between different languages for global users.",
     timestamp: new Date("2024-08-08T13:30:00Z"),
     author: {
-      id: "author-3",
+      id: generateId(),
       firstName: "Charlie",
       lastName: "Brown",
     },
     comments: [
       {
-        id: "comment-4",
-        suggestionId: "suggestion-8",
+        id: generateId(),
+        suggestionId: 666555444,
         author: {
-          id: "author-9",
+          id: generateId(),
           firstName: "Ivy",
           lastName: "Green",
         },
@@ -398,35 +288,35 @@ export const testSuggestions: UserSuggestion[] = [
     ],
   },
   {
-    id: "suggestion-9",
+    id: 888777666,
     title: "Improve Accessibility Features",
     description:
       "Enhance accessibility features to support users with disabilities.",
     timestamp: new Date("2024-08-09T15:00:00Z"),
     author: {
-      id: "author-4",
+      id: generateId(),
       firstName: "Dana",
       lastName: "Lee",
     },
     comments: [],
   },
   {
-    id: "suggestion-10",
+    id: 777666555,
     title: "Create a Feedback System",
     description:
       "Implement a system for users to provide feedback and rate features.",
     timestamp: new Date("2024-08-10T17:30:00Z"),
     author: {
-      id: "author-5",
+      id: generateId(),
       firstName: "Eve",
       lastName: "Davis",
     },
     comments: [
       {
-        id: "comment-5",
-        suggestionId: "suggestion-10",
+        id: generateId(),
+        suggestionId: 777666555,
         author: {
-          id: "author-6",
+          id: generateId(),
           firstName: "Frank",
           lastName: "Miller",
         },

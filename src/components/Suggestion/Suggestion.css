@@ -2,7 +2,6 @@
 
 .comment {
   gap: 0.5rem;
-  align-items: center;
   font-size: 0.9rem;
   padding: 0.25rem;
   margin-top: 0.4rem;
@@ -47,6 +46,7 @@
   border: 1px solid var(--border-color);
   border-radius: 0.5rem;
   padding: 0.25rem;
+  /* margin-bottom: 1rem; */
 }
 
 .suggestion-comments .list-group-item:first-child {

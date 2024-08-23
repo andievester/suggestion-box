@@ -4,11 +4,12 @@ import "./NewSuggestionModal.css";
 import { FieldValues, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { v4 as uuidv4 } from "uuid";
 import { useSuggestionContext } from "../../contexts/SuggestionContext";
 import { useSuggestionListContext } from "../../contexts/SuggestionListContext";
 import { User, UserSuggestion } from "../../types/suggestion.interfaces";
 import { useNavigate } from "react-router-dom";
+import { generateId } from "../../utils/data-format-utils";
+import { suggestionService } from "../../services/suggestion.service";
 
 const schema = z.object({
   suggestionTitle: z
@@ -27,7 +28,7 @@ const NewSuggestionModal = () => {
 
   const { setSelectedSuggestion } = useSuggestionContext();
 
-  const { setSuggestions } = useSuggestionListContext();
+  const { addSuggestion } = useSuggestionListContext();
 
   const {
     register,
@@ -38,32 +39,13 @@ const NewSuggestionModal = () => {
 
   const onSubmit = (data: FieldValues) => {
     if (isValid) {
-      const newSuggestionId = uuidv4();
-      const newSuggestionAuthor: User = {
-        id: "my-user-id",
-        firstName: "Me",
-      };
+      const newSuggestion: UserSuggestion =
+        suggestionService.createNewSuggestion(data);
 
-      const newSuggestion: UserSuggestion = {
-        id: newSuggestionId,
-        title: data.suggestionTitle,
-        description: data.suggestionDescription,
-        timestamp: new Date(),
-        author: newSuggestionAuthor,
-        comments: [],
-      };
-
-      setSuggestions((prevSuggestions) => {
-        const updatedSuggestions = [newSuggestion, ...prevSuggestions];
-        return updatedSuggestions;
-      });
-
+      addSuggestion(newSuggestion);
       setSelectedSuggestion(newSuggestion);
-
       navigate(`/${newSuggestion.title}`);
-
       reset();
-
       handleClose();
     }
   };

@@ -1,5 +1,5 @@
 export interface UserSuggestion {
-  id: string;
+  id: number;
   title: string;
   description: string;
   timestamp: Date;
@@ -8,15 +8,15 @@ export interface UserSuggestion {
 }
 
 export interface User {
-  id: string;
+  id: number;
   title?: string;
   firstName: string;
   lastName?: string;
 }
 
 export interface UserComment {
-  id: string;
-  suggestionId: string;
+  id: number;
+  suggestionId: number;
   author: User;
   content: string;
   timestamp: Date;

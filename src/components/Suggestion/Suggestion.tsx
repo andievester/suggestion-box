@@ -9,9 +9,9 @@ import {
 } from "react-bootstrap";
 import Initials from "../Initials/Initials";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { formatTimestamp } from "../../utils/data-format-utils";
-import { User, UserComment } from "../../types/suggestion.interfaces";
+import { UserSuggestion } from "../../types/suggestion.interfaces";
+import { suggestionService } from "../../services/suggestion.service";
 
 const Suggestion = () => {
   const [initialLoad, setInitialLoad] = useState(true);
@@ -27,10 +27,12 @@ const Suggestion = () => {
   const commentsEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    console.log("first load", selectedSuggestion);
     setInitialLoad(false);
   }, []);
 
   useEffect(() => {
+    console.log("selected", selectedSuggestion);
     if (inputRef.current) {
       inputRef.current.focus();
     }
@@ -48,30 +50,14 @@ const Suggestion = () => {
   };
 
   const handleNewCommentSubmit = () => {
-    const newCommentAuthor: User = {
-      id: "my-user-id",
-      firstName: "Me",
-    };
-
-    const newCommentId = uuidv4();
-
     if (newComment.trim() && selectedSuggestion) {
-      const commentSubmit: UserComment = {
-        id: newCommentId,
-        suggestionId: selectedSuggestion.id,
-        author: newCommentAuthor,
-        content: newComment,
-        timestamp: new Date(),
-      };
-      console.log(selectedSuggestion);
-
-      const updatedSuggestion = {
-        ...selectedSuggestion,
-        comments: [...selectedSuggestion.comments, commentSubmit],
-      };
+      const updatedSuggestion: UserSuggestion =
+        suggestionService.addCommentToSuggestion(
+          selectedSuggestion,
+          newComment
+        );
 
       setSelectedSuggestion(updatedSuggestion);
-
       setNewComment("");
       setShouldScroll(true);
     }
@@ -86,7 +72,7 @@ const Suggestion = () => {
   return (
     <div className="suggestion-wrapper">
       <div className="sticky-header">
-        {selectedSuggestion && <h1>{selectedSuggestion.title}</h1>}
+        {selectedSuggestion && <h2>{selectedSuggestion.title}</h2>}
         {selectedSuggestion && <p>{selectedSuggestion.description}</p>}
       </div>
       <div className="suggestion-comments">

@@ -1,3 +1,5 @@
+import { faker } from "@faker-js/faker";
+
 export const formatTimestamp = (timestamp: Date) => {
   const date = new Date(timestamp);
   const options: Intl.DateTimeFormatOptions = {
@@ -8,4 +10,8 @@ export const formatTimestamp = (timestamp: Date) => {
     [],
     options
   )}`;
+};
+
+export const generateId = () => {
+  return faker.number.int({ min: 100000000, max: 999999999 });
 };

@@ -1,78 +1,56 @@
-import { v4 as uuidv4 } from "uuid";
+import { FieldValues } from "react-hook-form";
 import {
   User,
-  UserSuggestion,
   UserComment,
+  UserSuggestion,
 } from "../types/suggestion.interfaces";
+import { generateId } from "../utils/data-format-utils";
+import { mockSuggestions } from "./mock-data";
 
 class SuggestionService {
-  private suggestions: UserSuggestion[];
-  private selectedSuggestion: UserSuggestion | undefined;
-
-  constructor(initialSuggestions: UserSuggestion[]) {
-    this.suggestions = initialSuggestions;
-    this.selectedSuggestion = undefined;
+  findSuggestionByTitle(title: string): UserSuggestion | undefined {
+    return mockSuggestions.find((suggestion) => suggestion.title === title);
   }
 
-  getSuggestions(): UserSuggestion[] {
-    return this.suggestions;
-  }
+  getFirstSuggestion = () => mockSuggestions[0];
 
-  getSelectedSuggestion(): UserSuggestion | undefined {
-    return this.selectedSuggestion;
-  }
-
-  setSelectedSuggestion(suggestion: UserSuggestion) {
-    this.selectedSuggestion = suggestion;
-  }
-
-  addSuggestion(
-    title: string,
-    description: string,
-    author: User
-  ): UserSuggestion {
-    const newSuggestion: UserSuggestion = {
-      id: uuidv4(),
-      title,
-      description,
-      timestamp: new Date(),
-      author,
-      comments: [],
+  createNewSuggestion(data: FieldValues): UserSuggestion {
+    const newSuggestionId = generateId();
+    const newSuggestionAuthor: User = {
+      id: generateId(),
+      firstName: "Me",
     };
 
-    this.suggestions = [newSuggestion, ...this.suggestions];
-    this.setSelectedSuggestion(newSuggestion);
-
-    return newSuggestion;
+    return {
+      id: newSuggestionId,
+      title: data.suggestionTitle,
+      description: data.suggestionDescription,
+      timestamp: new Date(),
+      author: newSuggestionAuthor,
+      comments: [],
+    };
   }
 
   addCommentToSuggestion(
-    suggestionId: string,
-    content: string,
-    author: User
-  ): UserComment | null {
-    const suggestion = this.suggestions.find((s) => s.id === suggestionId);
-    if (!suggestion) return null;
-
+    suggestion: UserSuggestion,
+    commentContent: string
+  ): UserSuggestion {
     const newComment: UserComment = {
-      id: uuidv4(),
-      suggestionId,
-      author,
-      content,
+      id: generateId(),
+      suggestionId: suggestion.id,
+      author: {
+        id: generateId(),
+        firstName: "Me",
+      },
+      content: commentContent,
       timestamp: new Date(),
     };
 
-    suggestion.comments.push(newComment);
-    if (this.selectedSuggestion?.id === suggestionId) {
-      this.selectedSuggestion.comments = suggestion.comments;
-    }
-
-    return newComment;
-  }
-
-  findSuggestionByTitle(title: string): UserSuggestion | undefined {
-    return this.suggestions.find((suggestion) => suggestion.title === title);
+    return {
+      ...suggestion,
+      comments: [...suggestion.comments, newComment],
+    };
   }
 }
 
-export default SuggestionService;
+export const suggestionService = new SuggestionService();

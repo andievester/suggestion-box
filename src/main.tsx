@@ -12,8 +12,8 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import { getFirstSuggestion } from "./services/test-data.ts";
 import Suggestion from "./components/Suggestion/Suggestion.tsx";
+import { suggestionService } from "./services/suggestion.service.ts";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,7 +21,9 @@ const router = createBrowserRouter(
       <Route path="/" element={<App />}>
         <Route
           index
-          element={<Navigate to={`/${getFirstSuggestion().title}`} />}
+          element={
+            <Navigate to={`/${suggestionService.getFirstSuggestion().title}`} />
+          }
         />
         <Route path=":suggestionTitle" element={<Suggestion />} />
       </Route>

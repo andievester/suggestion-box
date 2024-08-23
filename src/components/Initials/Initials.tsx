@@ -1,4 +1,4 @@
-import { User } from "../../services/suggestion.service";
+import { User } from "../../types/suggestion.interfaces";
 import "./Initials.css";
 
 interface Props {
@@ -29,7 +29,7 @@ const Initials = ({ user, isCommentAuthor }: Readonly<Props>) => {
         </div>
       ) : (
         <div className="d-flex align-items-center">
-          <i className="bi bi-person-raised-hand"></i>
+          <i className="bi bi-person-raised-hand fs-5 me-icon"></i>
           {!isCommentAuthor && (
             <span className="secondary-text">{user.firstName}</span>
           )}

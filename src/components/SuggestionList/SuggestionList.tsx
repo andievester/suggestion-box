@@ -8,6 +8,7 @@ import Initials from "../Initials/Initials";
 import { formatTimestamp } from "../../utils/data-format-utils";
 import { useSuggestionListContext } from "../../contexts/SuggestionListContext";
 import { UserSuggestion } from "../../types/suggestion.interfaces";
+import { SuggestionGenerator } from "../../services/generate-suggestion.service";
 
 function SuggestionList({
   onSuggestionClick,
@@ -16,9 +17,9 @@ function SuggestionList({
 }>) {
   const { selectedSuggestion } = useSuggestionContext();
 
-  const { suggestions } = useSuggestionListContext();
+  const { suggestions, addSuggestion } = useSuggestionListContext();
 
-  const [activeSuggestionId, setActiveSuggestionId] = useState<string | null>(
+  const [activeSuggestionId, setActiveSuggestionId] = useState<number | null>(
     null
   );
 
@@ -29,6 +30,16 @@ function SuggestionList({
       setActiveSuggestionId(suggestions[0]?.id || null);
     }
   }, [selectedSuggestion, suggestions]);
+
+  const addRandomSuggestion = () => {
+    const newSuggestion = SuggestionGenerator.generateRandomSuggestion();
+    addSuggestion(newSuggestion);
+  };
+
+  useEffect(() => {
+    const interval = setInterval(addRandomSuggestion, 50000);
+    return () => clearInterval(interval);
+  }, [addSuggestion]);
 
   function handleSuggestionClick(suggestion: UserSuggestion) {
     onSuggestionClick(suggestion);

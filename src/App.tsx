@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { testSuggestions } from "./services/test-data";
+import { mockSuggestions } from "./services/mock-data";
 import SuggestionList from "./components/SuggestionList/SuggestionList";
 import { SuggestionProvider } from "./contexts/SuggestionContext";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { SuggestionListProvider } from "./contexts/SuggestionListContext";
 import { UserSuggestion } from "./types/suggestion.interfaces";
-
-const findSuggestionByTitle = (title: string) =>
-  testSuggestions.find((suggestion) => suggestion.title === title);
+import { suggestionService } from "./services/suggestion.service";
 
 function AppContent() {
   const { suggestionTitle } = useParams();
@@ -21,9 +19,18 @@ function AppContent() {
 
   useEffect(() => {
     if (!selectedSuggestion && suggestionTitle) {
-      const suggestion = findSuggestionByTitle(suggestionTitle);
+      const suggestion =
+        suggestionService.findSuggestionByTitle(suggestionTitle);
+      console.log("app - first condition", suggestion);
       if (suggestion) {
+        console.log("app - second condition", suggestion);
         setSelectedSuggestion(suggestion);
+      } else {
+        const firstSuggestion = suggestionService.getFirstSuggestion();
+
+        console.log("app - third condition", firstSuggestion);
+        setSelectedSuggestion(firstSuggestion);
+        navigate(`/${firstSuggestion.title}`);
       }
     }
   }, [suggestionTitle, navigate, selectedSuggestion]);
@@ -36,7 +43,7 @@ function AppContent() {
   const suggestionContextValue = { selectedSuggestion, setSelectedSuggestion };
 
   return (
-    <SuggestionListProvider initialSuggestions={testSuggestions}>
+    <SuggestionListProvider initialSuggestions={mockSuggestions}>
       <SuggestionProvider value={suggestionContextValue}>
         <div className="container-fluid">
           <div className="row">
