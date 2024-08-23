@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { mockSuggestions } from "./services/mock-data";
 import SuggestionList from "./components/SuggestionList/SuggestionList";
 import { SuggestionProvider } from "./contexts/SuggestionContext";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { SuggestionListProvider } from "./contexts/SuggestionListContext";
 import { UserSuggestion } from "./types/suggestion.interfaces";
 import { suggestionService } from "./services/suggestion.service";
+import localStorageService from "./services/local-storage.service";
 
 function AppContent() {
+  const storedSuggestions: UserSuggestion[] =
+    localStorageService.getSuggestions();
+
   const { suggestionTitle } = useParams();
 
   const [selectedSuggestion, setSelectedSuggestion] = useState<
@@ -19,18 +22,19 @@ function AppContent() {
 
   useEffect(() => {
     if (!selectedSuggestion && suggestionTitle) {
-      const suggestion =
+      const suggestion: UserSuggestion | undefined =
         suggestionService.findSuggestionByTitle(suggestionTitle);
-      console.log("app - first condition", suggestion);
       if (suggestion) {
-        console.log("app - second condition", suggestion);
         setSelectedSuggestion(suggestion);
       } else {
-        const firstSuggestion = suggestionService.getFirstSuggestion();
-
-        console.log("app - third condition", firstSuggestion);
-        setSelectedSuggestion(firstSuggestion);
-        navigate(`/${firstSuggestion.title}`);
+        const firstSuggestion: UserSuggestion | undefined =
+          storedSuggestions[0];
+        if (firstSuggestion) {
+          setSelectedSuggestion(firstSuggestion);
+          navigate(`/${firstSuggestion.title}`);
+        } else {
+          console.error("No suggestions available to navigate to.");
+        }
       }
     }
   }, [suggestionTitle, navigate, selectedSuggestion]);
@@ -43,7 +47,7 @@ function AppContent() {
   const suggestionContextValue = { selectedSuggestion, setSelectedSuggestion };
 
   return (
-    <SuggestionListProvider initialSuggestions={mockSuggestions}>
+    <SuggestionListProvider initialSuggestions={storedSuggestions}>
       <SuggestionProvider value={suggestionContextValue}>
         <div className="container-fluid">
           <div className="row">

@@ -7,6 +7,7 @@ import {
   useState,
 } from "react";
 import { UserSuggestion } from "../types/suggestion.interfaces";
+import localStorageService from "../services/local-storage.service";
 
 interface SuggestionListContextProps {
   suggestions: UserSuggestion[];
@@ -29,7 +30,9 @@ export function SuggestionListProvider({
     useState<UserSuggestion[]>(initialSuggestions);
 
   const addSuggestion = (suggestion: UserSuggestion) => {
-    setSuggestions((prevSuggestions) => [suggestion, ...prevSuggestions]);
+    const updatedSuggestions: UserSuggestion[] = [suggestion, ...suggestions];
+    localStorageService.addNewSuggestion(updatedSuggestions);
+    setSuggestions(updatedSuggestions);
   };
 
   return (

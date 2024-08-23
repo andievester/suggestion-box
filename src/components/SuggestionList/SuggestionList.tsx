@@ -9,6 +9,8 @@ import { formatTimestamp } from "../../utils/data-format-utils";
 import { useSuggestionListContext } from "../../contexts/SuggestionListContext";
 import { UserSuggestion } from "../../types/suggestion.interfaces";
 import { SuggestionGenerator } from "../../services/generate-suggestion.service";
+import localStorageService from "../../services/local-storage.service";
+import { suggestionService } from "../../services/suggestion.service";
 
 function SuggestionList({
   onSuggestionClick,
@@ -17,7 +19,9 @@ function SuggestionList({
 }>) {
   const { selectedSuggestion } = useSuggestionContext();
 
-  const { suggestions, addSuggestion } = useSuggestionListContext();
+  const suggestions: UserSuggestion[] = localStorageService.getSuggestions();
+
+  const { addSuggestion } = useSuggestionListContext();
 
   const [activeSuggestionId, setActiveSuggestionId] = useState<number | null>(
     null
@@ -31,20 +35,21 @@ function SuggestionList({
     }
   }, [selectedSuggestion, suggestions]);
 
-  const addRandomSuggestion = () => {
-    const newSuggestion = SuggestionGenerator.generateRandomSuggestion();
-    addSuggestion(newSuggestion);
-  };
-
   useEffect(() => {
-    const interval = setInterval(addRandomSuggestion, 50000);
+    const interval = setInterval(addRandomSuggestion, 300000);
     return () => clearInterval(interval);
   }, [addSuggestion]);
 
-  function handleSuggestionClick(suggestion: UserSuggestion) {
+  const addRandomSuggestion = () => {
+    const newSuggestion: UserSuggestion =
+      SuggestionGenerator.generateRandomSuggestion();
+    addSuggestion(newSuggestion);
+  };
+
+  const handleSuggestionClick = (suggestion: UserSuggestion) => {
     onSuggestionClick(suggestion);
     setActiveSuggestionId(suggestion.id);
-  }
+  };
 
   return (
     <div className="suggestion-list-wrapper">

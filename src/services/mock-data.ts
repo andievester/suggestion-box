@@ -72,17 +72,6 @@ export const mockSuggestions: UserSuggestion[] = [
         suggestionId: 111222333,
         author: {
           id: generateId(),
-          firstName: "Frank",
-          lastName: "Garcia",
-        },
-        content: "Would love to see this feature.",
-        timestamp: new Date("2024-08-01T11:30:00Z"),
-      },
-      {
-        id: generateId(),
-        suggestionId: 111222333,
-        author: {
-          id: generateId(),
           firstName: "Grace",
           lastName: "Martinez",
         },
@@ -142,7 +131,8 @@ export const mockSuggestions: UserSuggestion[] = [
           firstName: "Liam",
           lastName: "Walker",
         },
-        content: "Would definitely use dark mode if available.",
+        content:
+          "Moreover, dark mode provides a more aesthetically pleasing experience for many users, often enhancing the visual appeal of certain design elements, such as images, videos, and colorful graphics. By adopting dark mode, applications can cater to a broader audience, ensuring accessibility and comfort across various viewing conditions. For users who spend a significant amount of time in front of screens, particularly during the evening or night, dark mode is not just a preference—it's a necessity. It offers a gentler, more soothing interface that aligns with the natural reduction of ambient light, promoting a healthier interaction with digital devices. Incorporating dark mode as a key feature demonstrates a commitment to user-centric design, accommodating the needs of diverse users while enhancing the overall usability of the application. As digital experiences continue to evolve, dark mode will remain a fundamental aspect of delivering a versatile and inclusive user experience.",
         timestamp: new Date("2024-08-01T12:00:00Z"),
       },
       {

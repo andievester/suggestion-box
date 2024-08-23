@@ -1,28 +1,5 @@
 @import "../../variables.css";
 
-.comment {
-  gap: 0.5rem;
-  font-size: 0.9rem;
-  padding: 0.25rem;
-  margin-top: 0.4rem;
-  border-radius: 0.5rem;
-  background-color: var(--background-super-light);
-  border: 1px solid var(--border-color);
-}
-
-.comment-wrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  margin-left: 0.5rem;
-  margin-right: 1.5rem;
-  gap: 0.25rem;
-}
-
-.my-comment-wrapper {
-  flex-direction: row-reverse;
-}
-
 .no-comments-message {
   display: flex;
   margin-top: 0.25rem;
@@ -44,7 +21,7 @@
   flex: 1;
   overflow-y: scroll;
   border: 1px solid var(--border-color);
-  border-radius: 0.5rem;
+  border-radius: var(--border-radius-boxes);
   padding: 0.25rem;
   /* margin-bottom: 1rem; */
 }
@@ -52,26 +29,6 @@
 .suggestion-comments .list-group-item:first-child {
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
-}
-
-.my-comment {
-  flex-direction: row-reverse;
-}
-
-.my-comment-timestamp {
-  align-self: flex-end;
-}
-
-.comment-and-timestamp {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.comment-timestamp {
-  font-size: 0.65rem;
-  font-style: italic;
-  color: var(--text-secondary);
 }
 
 .comment-input {

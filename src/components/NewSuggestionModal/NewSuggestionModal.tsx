@@ -6,9 +6,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSuggestionContext } from "../../contexts/SuggestionContext";
 import { useSuggestionListContext } from "../../contexts/SuggestionListContext";
-import { User, UserSuggestion } from "../../types/suggestion.interfaces";
+import { UserSuggestion } from "../../types/suggestion.interfaces";
 import { useNavigate } from "react-router-dom";
-import { generateId } from "../../utils/data-format-utils";
 import { suggestionService } from "../../services/suggestion.service";
 
 const schema = z.object({

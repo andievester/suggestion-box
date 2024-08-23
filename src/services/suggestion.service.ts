@@ -5,14 +5,19 @@ import {
   UserSuggestion,
 } from "../types/suggestion.interfaces";
 import { generateId } from "../utils/data-format-utils";
+import localStorageService from "./local-storage.service";
 import { mockSuggestions } from "./mock-data";
 
 class SuggestionService {
+  suggestions: UserSuggestion[] = localStorageService.getSuggestions()
+    ? localStorageService.getSuggestions()
+    : mockSuggestions;
+
   findSuggestionByTitle(title: string): UserSuggestion | undefined {
-    return mockSuggestions.find((suggestion) => suggestion.title === title);
+    return this.suggestions.find((suggestion) => suggestion.title === title);
   }
 
-  getFirstSuggestion = () => mockSuggestions[0];
+  getFirstSuggestion = () => this.suggestions[0];
 
   createNewSuggestion(data: FieldValues): UserSuggestion {
     const newSuggestionId = generateId();
@@ -34,7 +39,7 @@ class SuggestionService {
   addCommentToSuggestion(
     suggestion: UserSuggestion,
     commentContent: string
-  ): UserSuggestion {
+  ): UserSuggestion | null {
     const newComment: UserComment = {
       id: generateId(),
       suggestionId: suggestion.id,
@@ -46,10 +51,24 @@ class SuggestionService {
       timestamp: new Date(),
     };
 
-    return {
+    const updatedSuggestion: UserSuggestion = {
       ...suggestion,
       comments: [...suggestion.comments, newComment],
     };
+
+    localStorageService.updateSuggestionComments(
+      updatedSuggestion,
+      localStorageService.getSuggestions()
+    );
+
+    const foundUpdatedSuggestion: UserSuggestion | null =
+      localStorageService.getSuggestionById(updatedSuggestion.id);
+
+    if (foundUpdatedSuggestion) {
+      return foundUpdatedSuggestion;
+    } else {
+      return null;
+    }
   }
 }
 

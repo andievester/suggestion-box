@@ -11,9 +11,15 @@ import {
   Navigate,
   Route,
   RouterProvider,
+  useNavigate,
 } from "react-router-dom";
 import Suggestion from "./components/Suggestion/Suggestion.tsx";
 import { suggestionService } from "./services/suggestion.service.ts";
+import localStorageService from "./services/local-storage.service.ts";
+
+localStorageService.initialize();
+
+const firstSuggestion = suggestionService.getFirstSuggestion();
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,10 +28,18 @@ const router = createBrowserRouter(
         <Route
           index
           element={
-            <Navigate to={`/${suggestionService.getFirstSuggestion().title}`} />
+            firstSuggestion ? (
+              <Navigate to={`/${firstSuggestion.title}`} />
+            ) : (
+              <Navigate to="/fallback" />
+            )
           }
         />
         <Route path=":suggestionTitle" element={<Suggestion />} />
+        <Route
+          path="/fallback"
+          element={<div>No suggestions available.</div>}
+        />
       </Route>
     </>
   )

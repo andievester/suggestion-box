@@ -1,19 +1,16 @@
 import "./Suggestion.css";
 import { useSuggestionContext } from "../../contexts/SuggestionContext";
-import {
-  Button,
-  FormControl,
-  InputGroup,
-  ListGroup,
-  ListGroupItem,
-} from "react-bootstrap";
-import Initials from "../Initials/Initials";
+import { Button, FormControl, InputGroup, ListGroup } from "react-bootstrap";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { formatTimestamp } from "../../utils/data-format-utils";
-import { UserSuggestion } from "../../types/suggestion.interfaces";
 import { suggestionService } from "../../services/suggestion.service";
+import SuggestionComment from "../SuggestionComment/SuggestionComment";
+import { UserSuggestion } from "../../types/suggestion.interfaces";
+import localStorageService from "../../services/local-storage.service";
+import { useSuggestionListContext } from "../../contexts/SuggestionListContext";
 
 const Suggestion = () => {
+  const { setSuggestions } = useSuggestionListContext();
+
   const [initialLoad, setInitialLoad] = useState(true);
 
   const [shouldScroll, setShouldScroll] = useState(false);
@@ -27,12 +24,10 @@ const Suggestion = () => {
   const commentsEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    console.log("first load", selectedSuggestion);
     setInitialLoad(false);
   }, []);
 
   useEffect(() => {
-    console.log("selected", selectedSuggestion);
     if (inputRef.current) {
       inputRef.current.focus();
     }
@@ -51,13 +46,23 @@ const Suggestion = () => {
 
   const handleNewCommentSubmit = () => {
     if (newComment.trim() && selectedSuggestion) {
-      const updatedSuggestion: UserSuggestion =
+      const foundUpdatedSuggestion: UserSuggestion | null =
         suggestionService.addCommentToSuggestion(
           selectedSuggestion,
           newComment
         );
 
-      setSelectedSuggestion(updatedSuggestion);
+      if (foundUpdatedSuggestion) {
+        setSelectedSuggestion(foundUpdatedSuggestion);
+      } else {
+        console.error("Suggestion does not exist.");
+      }
+
+      const updatedSuggestionsList: UserSuggestion[] =
+        localStorageService.getSuggestions();
+
+      setSuggestions(updatedSuggestionsList);
+
       setNewComment("");
       setShouldScroll(true);
     }
@@ -81,35 +86,10 @@ const Suggestion = () => {
         ) : (
           <ListGroup>
             {selectedSuggestion?.comments.map((comment) => (
-              <div
-                className={`comment-wrapper ${
-                  !comment.author.lastName ? "my-comment-wrapper" : ""
-                }`}
+              <SuggestionComment
                 key={comment.id}
-              >
-                <Initials
-                  user={comment.author}
-                  isCommentAuthor={true}
-                ></Initials>
-                <div className="comment-and-timestamp">
-                  <ListGroupItem
-                    className={`d-flex comment ${
-                      !comment.author.lastName
-                        ? "my-comment bg-primary bg-opacity-10"
-                        : ""
-                    }`}
-                  >
-                    <div>{comment.content}</div>
-                  </ListGroupItem>
-                  <div
-                    className={`comment-timestamp ${
-                      comment.author.lastName ? "my-comment-timestamp" : ""
-                    }`}
-                  >
-                    {formatTimestamp(comment.timestamp)}
-                  </div>
-                </div>
-              </div>
+                comment={comment}
+              ></SuggestionComment>
             ))}
             <div ref={commentsEndRef} />
           </ListGroup>
