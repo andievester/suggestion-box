@@ -1,4 +1,4 @@
-import { UserSuggestion } from "./in-memory-data-provider";
+import { UserSuggestion } from "./suggestion.service";
 
 export const getFirstSuggestion = () => testSuggestions[0];
 
@@ -10,7 +10,7 @@ export const testSuggestions: UserSuggestion[] = [
     timestamp: new Date("2024-08-01T10:00:00Z"),
     author: {
       id: "author-1",
-      firstName: "You",
+      firstName: "Me",
     },
     comments: [
       {
@@ -40,8 +40,7 @@ export const testSuggestions: UserSuggestion[] = [
         suggestionId: "suggestion-1",
         author: {
           id: "author-4",
-          firstName: "Charlie",
-          lastName: "Brown",
+          firstName: "Me",
         },
         content: "I agree! My eyes would really appreciate a dark mode.",
         timestamp: new Date("2024-08-01T11:15:00Z"),
@@ -98,7 +97,8 @@ export const testSuggestions: UserSuggestion[] = [
           firstName: "Henry",
           lastName: "Robinson",
         },
-        content: "Yes, please! My eyes are begging for this feature.",
+        content:
+          "Yes, please! My eyes are begging for this feature. I've been using the app for months now, and the lack of a dark mode has been a constant strain on my eyes. The ability to switch to a dark theme would not only make the app more visually appealing but also significantly reduce eye strain during extended use. It's such a crucial feature that I believe many users would greatly appreciate, especially those of us who spend a lot of time on the app late into the night.",
         timestamp: new Date("2024-08-01T11:40:00Z"),
       },
       {
@@ -109,7 +109,8 @@ export const testSuggestions: UserSuggestion[] = [
           firstName: "Ivy",
           lastName: "Clark",
         },
-        content: "Dark mode would be a game changer.",
+        content:
+          "Dark mode would be a game changer. I've seen this feature become a standard in many other applications, and for good reason. Not only does it provide a more comfortable viewing experience in low-light conditions, but it also helps in saving battery life on OLED screens. Implementing dark mode would be a fantastic upgrade that would cater to a wider range of users and improve the overall usability of the app. It's a small change that could make a big difference for many of us who prefer to use the app in dimly lit environments.",
         timestamp: new Date("2024-08-01T11:45:00Z"),
       },
       {
@@ -117,8 +118,7 @@ export const testSuggestions: UserSuggestion[] = [
         suggestionId: "suggestion-1",
         author: {
           id: "author-11",
-          firstName: "Jack",
-          lastName: "Lewis",
+          firstName: "Me",
         },
         content: "I can't wait for this to be implemented.",
         timestamp: new Date("2024-08-01T11:50:00Z"),

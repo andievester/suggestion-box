@@ -1,4 +1,4 @@
-import { User } from "../../services/in-memory-data-provider";
+import { User } from "../../services/suggestion.service";
 import "./Initials.css";
 
 interface Props {
@@ -30,7 +30,9 @@ const Initials = ({ user, isCommentAuthor }: Readonly<Props>) => {
       ) : (
         <div className="d-flex align-items-center">
           <i className="bi bi-person-raised-hand"></i>
-          <span className="secondary-text">{user.firstName}</span>
+          {!isCommentAuthor && (
+            <span className="secondary-text">{user.firstName}</span>
+          )}
         </div>
       )}
     </div>

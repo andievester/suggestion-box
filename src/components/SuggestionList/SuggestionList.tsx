@@ -1,37 +1,38 @@
+import { useEffect, useState } from "react";
+import { useSuggestionContext } from "../../contexts/SuggestionContext";
 import { Link } from "react-router-dom";
-import { UserSuggestion } from "../../services/in-memory-data-provider";
 import "./SuggestionList.css";
 import NewSuggestionModal from "../NewSuggestionModal/NewSuggestionModal";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 import Initials from "../Initials/Initials";
-import { useState } from "react";
+import { formatTimestamp } from "../../utils/data-format-utils";
+import { useSuggestionListContext } from "../../contexts/SuggestionListContext";
+import { UserSuggestion } from "../../types/suggestion.interfaces";
 
-interface Props {
-  suggestions: UserSuggestion[];
-  onSuggestionClick: (suggestionId: UserSuggestion) => void;
-}
+function SuggestionList({
+  onSuggestionClick,
+}: Readonly<{
+  onSuggestionClick: (suggestion: UserSuggestion) => void;
+}>) {
+  const { selectedSuggestion } = useSuggestionContext();
 
-function SuggestionList({ suggestions, onSuggestionClick }: Readonly<Props>) {
+  const { suggestions } = useSuggestionListContext();
+
   const [activeSuggestionId, setActiveSuggestionId] = useState<string | null>(
     null
   );
 
-  function setActiveSuggestion(suggestion: UserSuggestion) {
-    console.log(suggestion.id, activeSuggestionId);
+  useEffect(() => {
+    if (selectedSuggestion) {
+      setActiveSuggestionId(selectedSuggestion.id);
+    } else if (suggestions.length > 0) {
+      setActiveSuggestionId(suggestions[0]?.id || null);
+    }
+  }, [selectedSuggestion, suggestions]);
+
+  function handleSuggestionClick(suggestion: UserSuggestion) {
     onSuggestionClick(suggestion);
     setActiveSuggestionId(suggestion.id);
-  }
-
-  function formatTimestamp(timestamp: Date) {
-    const date = new Date(timestamp);
-    const options: Intl.DateTimeFormatOptions = {
-      hour: "2-digit",
-      minute: "2-digit",
-    };
-    return `${date.toLocaleDateString()} @ ${date.toLocaleTimeString(
-      [],
-      options
-    )}`;
   }
 
   return (
@@ -46,13 +47,13 @@ function SuggestionList({ suggestions, onSuggestionClick }: Readonly<Props>) {
                   ? "list-group-item-active"
                   : ""
               }`}
-              onClick={() => setActiveSuggestion(suggestion)}
+              onClick={() => handleSuggestionClick(suggestion)}
             >
               <Link
                 to={`/${suggestion.title}`}
                 className="btn btn-link btn-block text-left"
                 style={{ all: "unset", cursor: "pointer" }}
-                onClick={() => onSuggestionClick(suggestion)}
+                onClick={() => handleSuggestionClick(suggestion)}
               >
                 <div>
                   <strong>{suggestion.title}</strong>
@@ -62,17 +63,14 @@ function SuggestionList({ suggestions, onSuggestionClick }: Readonly<Props>) {
                     {formatTimestamp(suggestion.timestamp)}
                   </span>
                 </div>
-                <Initials
-                  user={suggestion.author}
-                  isCommentAuthor={false}
-                ></Initials>
+                <Initials user={suggestion.author} isCommentAuthor={false} />
               </Link>
             </ListGroupItem>
           ))}
         </ListGroup>
       </div>
       <div className="new-suggestion">
-        <NewSuggestionModal></NewSuggestionModal>
+        <NewSuggestionModal />
       </div>
     </div>
   );

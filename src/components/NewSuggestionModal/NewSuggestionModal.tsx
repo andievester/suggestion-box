@@ -4,6 +4,11 @@ import "./NewSuggestionModal.css";
 import { FieldValues, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { v4 as uuidv4 } from "uuid";
+import { useSuggestionContext } from "../../contexts/SuggestionContext";
+import { useSuggestionListContext } from "../../contexts/SuggestionListContext";
+import { User, UserSuggestion } from "../../types/suggestion.interfaces";
+import { useNavigate } from "react-router-dom";
 
 const schema = z.object({
   suggestionTitle: z
@@ -18,13 +23,56 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const NewSuggestionModal = () => {
+  const navigate = useNavigate();
+
+  const { setSelectedSuggestion } = useSuggestionContext();
+
+  const { setSuggestions } = useSuggestionListContext();
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
+    reset,
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const onSubmit = (data: FieldValues) => console.log(data);
+  const onSubmit = (data: FieldValues) => {
+    if (isValid) {
+      const newSuggestionId = uuidv4();
+      const newSuggestionAuthor: User = {
+        id: "my-user-id",
+        firstName: "Me",
+      };
+
+      const newSuggestion: UserSuggestion = {
+        id: newSuggestionId,
+        title: data.suggestionTitle,
+        description: data.suggestionDescription,
+        timestamp: new Date(),
+        author: newSuggestionAuthor,
+        comments: [],
+      };
+
+      setSuggestions((prevSuggestions) => {
+        const updatedSuggestions = [newSuggestion, ...prevSuggestions];
+        return updatedSuggestions;
+      });
+
+      setSelectedSuggestion(newSuggestion);
+
+      navigate(`/${newSuggestion.title}`);
+
+      reset();
+
+      handleClose();
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (e.key === "Enter") {
+      handleSubmit(onSubmit)();
+    }
+  };
 
   const [show, setShow] = useState(false);
 
@@ -44,25 +92,27 @@ const NewSuggestionModal = () => {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit(onSubmit)}>
-            <Form.Group className="mb-3" controlId="suggestionTitle">
+            <Form.Group controlId="suggestionTitle" className="mb-3">
               <Form.Label>Title</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Something ingenious..."
-                {...register("suggestionTitle")}
                 isInvalid={!!errors.suggestionTitle}
+                {...register("suggestionTitle")}
+                autoFocus
               />
               <Form.Control.Feedback type="invalid">
                 {errors.suggestionTitle?.message}
               </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="suggestionDescription">
+            <Form.Group controlId="suggestionDescription" className="mb-3">
               <Form.Label>Description</Form.Label>
               <Form.Control
                 type="text"
-                {...register("suggestionDescription")}
+                placeholder="Tell us more, we're all ears..."
                 isInvalid={!!errors.suggestionDescription}
+                {...register("suggestionDescription")}
               />
               <Form.Control.Feedback type="invalid">
                 {errors.suggestionDescription?.message}
@@ -73,7 +123,11 @@ const NewSuggestionModal = () => {
               <Button variant="secondary" onClick={handleClose}>
                 Cancel
               </Button>
-              <Button className="submit-btn" type="submit">
+              <Button
+                className="submit-btn"
+                type="submit"
+                onKeyDown={handleKeyDown}
+              >
                 Submit
               </Button>
             </div>
