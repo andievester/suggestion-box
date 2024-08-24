@@ -11,7 +11,6 @@ import {
   Navigate,
   Route,
   RouterProvider,
-  useNavigate,
 } from "react-router-dom";
 import Suggestion from "./components/Suggestion/Suggestion.tsx";
 import { suggestionService } from "./services/suggestion.service.ts";

@@ -210,11 +210,73 @@ export const mockSuggestions: UserSuggestion[] = [
       lastName: "Miller",
       title: "Mr.",
     },
-    comments: [],
+    comments: [
+      {
+        id: generateId(),
+        suggestionId: 666777888,
+        author: {
+          id: generateId(),
+          firstName: "Alice",
+          lastName: "Johnson",
+          title: "Ms.",
+        },
+        content: "Great idea! This will definitely increase user engagement.",
+        timestamp: new Date("2024-08-06T09:15:00Z"),
+      },
+      {
+        id: generateId(),
+        suggestionId: 666777888,
+        author: {
+          id: generateId(),
+          firstName: "Bob",
+          lastName: "Smith",
+          title: "Mr.",
+        },
+        content: "Can we include options for LinkedIn and Reddit?",
+        timestamp: new Date("2024-08-06T11:22:00Z"),
+      },
+      {
+        id: generateId(),
+        suggestionId: 666777888,
+        author: {
+          id: generateId(),
+          firstName: "Carol",
+          lastName: "Williams",
+          title: "Ms.",
+        },
+        content: "Make sure the sharing options are mobile-friendly.",
+        timestamp: new Date("2024-08-07T14:00:00Z"),
+      },
+      {
+        id: generateId(),
+        suggestionId: 666777888,
+        author: {
+          id: generateId(),
+          firstName: "David",
+          lastName: "Brown",
+          title: "Mr.",
+        },
+        content: "Consider adding analytics to track sharing metrics.",
+        timestamp: new Date("2024-08-07T16:45:00Z"),
+      },
+      {
+        id: generateId(),
+        suggestionId: 666777888,
+        author: {
+          id: generateId(),
+          firstName: "Eve",
+          lastName: "Davis",
+          title: "Ms.",
+        },
+        content:
+          "It would be useful to add a share button on user profiles as well.",
+        timestamp: new Date("2024-08-08T10:30:00Z"),
+      },
+    ],
   },
   {
     id: 777888999,
-    title: "Add Notification System",
+    title: "Implement Real-Time Notification System for User Updates",
     description:
       "Implement a notification system for important updates and messages.",
     timestamp: new Date("2024-08-06T08:30:00Z"),

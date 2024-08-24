@@ -6,11 +6,10 @@ import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { SuggestionListProvider } from "./contexts/SuggestionListContext";
 import { UserSuggestion } from "./types/suggestion.interfaces";
 import { suggestionService } from "./services/suggestion.service";
-import localStorageService from "./services/local-storage.service";
 
 function AppContent() {
   const storedSuggestions: UserSuggestion[] =
-    localStorageService.getSuggestions();
+    suggestionService.getSuggestions();
 
   const { suggestionTitle } = useParams();
 

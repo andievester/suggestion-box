@@ -5,7 +5,6 @@ import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { suggestionService } from "../../services/suggestion.service";
 import SuggestionComment from "../SuggestionComment/SuggestionComment";
 import { UserSuggestion } from "../../types/suggestion.interfaces";
-import localStorageService from "../../services/local-storage.service";
 import { useSuggestionListContext } from "../../contexts/SuggestionListContext";
 
 const Suggestion = () => {
@@ -59,7 +58,7 @@ const Suggestion = () => {
       }
 
       const updatedSuggestionsList: UserSuggestion[] =
-        localStorageService.getSuggestions();
+        suggestionService.getSuggestions();
 
       setSuggestions(updatedSuggestionsList);
       setNewComment("");

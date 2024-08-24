@@ -3,8 +3,6 @@
   --border-color: #ddd; /* Border color - gray */
   --background-super-light: #f8f9fa; /* Super light background color - gray */
   --background-light: #f0f0f0; /* Light background color - gray */
-  --background-medium: #c0c0c0; /* Medium background color - gray */
-  --box-shadow-light: rgba(0, 0, 0, 0.1); /* Light box shadow */
   --box-shadow-dark: rgba(0, 0, 0, 0.2);
   --bs-teal-opaque: rgba(32, 201, 151, 0.8);
   --bs-teal-medium-opaque: rgba(32, 201, 151, 0.3);

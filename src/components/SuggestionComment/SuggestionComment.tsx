@@ -32,7 +32,7 @@ const SuggestionComment = ({ comment }: Props) => {
             comment.author.lastName ? "my-comment-timestamp" : ""
           }`}
         >
-          {formatTimestamp(comment.timestamp)}
+          {formatTimestamp(comment.timestamp, true)}
         </div>
       </div>
     </div>

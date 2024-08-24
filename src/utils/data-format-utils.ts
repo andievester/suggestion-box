@@ -1,10 +1,11 @@
 import { faker } from "@faker-js/faker";
 
-export const formatTimestamp = (timestamp: Date) => {
+export const formatTimestamp = (timestamp: Date, isComment: boolean) => {
   const date = new Date(timestamp);
   const options: Intl.DateTimeFormatOptions = {
     hour: "2-digit",
     minute: "2-digit",
+    ...(isComment && { second: "2-digit" }),
   };
   return `${date.toLocaleDateString()} @ ${date.toLocaleTimeString(
     [],

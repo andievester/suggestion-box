@@ -9,15 +9,19 @@ import localStorageService from "./local-storage.service";
 import { mockSuggestions } from "./mock-data";
 
 class SuggestionService {
-  suggestions: UserSuggestion[] = localStorageService.getSuggestions()
-    ? localStorageService.getSuggestions()
-    : mockSuggestions;
-
-  findSuggestionByTitle(title: string): UserSuggestion | undefined {
-    return this.suggestions.find((suggestion) => suggestion.title === title);
+  getSuggestions(): UserSuggestion[] {
+    return localStorageService.getSuggestions() || mockSuggestions;
   }
 
-  getFirstSuggestion = () => this.suggestions[0];
+  findSuggestionByTitle(title: string): UserSuggestion | undefined {
+    return this.getSuggestions().find(
+      (suggestion) => suggestion.title === title
+    );
+  }
+
+  getFirstSuggestion(): UserSuggestion | undefined {
+    return this.getSuggestions()[0];
+  }
 
   createNewSuggestion(data: FieldValues): UserSuggestion {
     const newSuggestionId = generateId();
@@ -40,6 +44,11 @@ class SuggestionService {
     suggestion: UserSuggestion,
     commentContent: string
   ): UserSuggestion | null {
+    if (!suggestion || !commentContent.trim()) {
+      console.error("Invalid suggestion or comment content.");
+      return null;
+    }
+
     const newComment: UserComment = {
       id: generateId(),
       suggestionId: suggestion.id,
@@ -56,17 +65,23 @@ class SuggestionService {
       comments: [...suggestion.comments, newComment],
     };
 
-    localStorageService.updateSuggestionComments(
-      updatedSuggestion,
-      localStorageService.getSuggestions()
-    );
+    try {
+      localStorageService.updateSuggestionComments(
+        updatedSuggestion,
+        this.getSuggestions()
+      );
 
-    const foundUpdatedSuggestion: UserSuggestion | null =
-      localStorageService.getSuggestionById(updatedSuggestion.id);
+      const foundUpdatedSuggestion: UserSuggestion | null =
+        localStorageService.getSuggestionById(updatedSuggestion.id);
 
-    if (foundUpdatedSuggestion) {
-      return foundUpdatedSuggestion;
-    } else {
+      if (foundUpdatedSuggestion) {
+        return foundUpdatedSuggestion;
+      } else {
+        console.error("Failed to find the updated suggestion.");
+        return null;
+      }
+    } catch (error) {
+      console.error("An error occurred while updating the suggestion:", error);
       return null;
     }
   }

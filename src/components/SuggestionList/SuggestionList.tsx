@@ -9,7 +9,7 @@ import { formatTimestamp } from "../../utils/data-format-utils";
 import { useSuggestionListContext } from "../../contexts/SuggestionListContext";
 import { UserSuggestion } from "../../types/suggestion.interfaces";
 import { SuggestionGenerator } from "../../services/generate-suggestion.service";
-import localStorageService from "../../services/local-storage.service";
+import { suggestionService } from "../../services/suggestion.service";
 
 function SuggestionList({
   onSuggestionClick,
@@ -18,7 +18,7 @@ function SuggestionList({
 }>) {
   const { selectedSuggestion } = useSuggestionContext();
 
-  const suggestions: UserSuggestion[] = localStorageService.getSuggestions();
+  const suggestions: UserSuggestion[] = suggestionService.getSuggestions();
 
   const { addSuggestion } = useSuggestionListContext();
 
@@ -75,7 +75,7 @@ function SuggestionList({
                 </div>
                 <div>
                   <span className="suggestion-timestamp">
-                    {formatTimestamp(suggestion.timestamp)}
+                    {formatTimestamp(suggestion.timestamp, false)}
                   </span>
                 </div>
                 <Initials user={suggestion.author} isCommentAuthor={false} />
