@@ -10,34 +10,55 @@ import { mockSuggestions } from "./mock-data";
 
 class SuggestionService {
   getSuggestions(): UserSuggestion[] {
-    return localStorageService.getSuggestions() || mockSuggestions;
+    try {
+      const suggestions = localStorageService.getSuggestions();
+      return suggestions || mockSuggestions;
+    } catch (error) {
+      console.error("Failed to retrieve suggestions:", error);
+      return mockSuggestions;
+    }
   }
 
   findSuggestionByTitle(title: string): UserSuggestion | undefined {
-    return this.getSuggestions().find(
-      (suggestion) => suggestion.title === title
-    );
+    try {
+      return this.getSuggestions().find(
+        (suggestion) => suggestion.title === title
+      );
+    } catch (error) {
+      console.error("Error finding suggestion by title:", error);
+      return undefined;
+    }
   }
 
   getFirstSuggestion(): UserSuggestion | undefined {
-    return this.getSuggestions()[0];
+    try {
+      return this.getSuggestions()[0];
+    } catch (error) {
+      console.error("Error retrieving the first suggestion:", error);
+      return undefined;
+    }
   }
 
   createNewSuggestion(data: FieldValues): UserSuggestion {
-    const newSuggestionId = generateId();
-    const newSuggestionAuthor: User = {
-      id: generateId(),
-      firstName: "Me",
-    };
+    try {
+      const newSuggestionId = generateId();
+      const newSuggestionAuthor: User = {
+        id: generateId(),
+        firstName: "Me",
+      };
 
-    return {
-      id: newSuggestionId,
-      title: data.suggestionTitle,
-      description: data.suggestionDescription,
-      timestamp: new Date(),
-      author: newSuggestionAuthor,
-      comments: [],
-    };
+      return {
+        id: newSuggestionId,
+        title: data.suggestionTitle,
+        description: data.suggestionDescription,
+        timestamp: new Date(),
+        author: newSuggestionAuthor,
+        comments: [],
+      };
+    } catch (error) {
+      console.error("Error creating a new suggestion:", error);
+      throw new Error("Unable to create a new suggestion.");
+    }
   }
 
   addCommentToSuggestion(

@@ -15,10 +15,12 @@ import {
 import Suggestion from "./components/Suggestion/Suggestion.tsx";
 import { suggestionService } from "./services/suggestion.service.ts";
 import localStorageService from "./services/local-storage.service.ts";
+import { UserSuggestion } from "./types/suggestion.interfaces.ts";
 
 localStorageService.initialize();
 
-const firstSuggestion = suggestionService.getFirstSuggestion();
+const firstSuggestion: UserSuggestion | undefined =
+  suggestionService.getFirstSuggestion();
 
 const router = createBrowserRouter(
   createRoutesFromElements(
