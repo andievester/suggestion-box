@@ -24,14 +24,14 @@ const Initials = ({ user, isCommentAuthor }: Readonly<Props>) => {
         <div className="d-flex align-items-baseline">
           <div className="initials-icon">{getInitials(user)}</div>
           {!isCommentAuthor && (
-            <span className="secondary-text">{formatAuthor(user)}</span>
+            <span className="author-name">{formatAuthor(user)}</span>
           )}
         </div>
       ) : (
         <div className="d-flex align-items-center">
           <i className="bi bi-person-raised-hand fs-5 me-icon"></i>
           {!isCommentAuthor && (
-            <span className="secondary-text">{user.firstName}</span>
+            <span className="author-name">{user.firstName}</span>
           )}
         </div>
       )}

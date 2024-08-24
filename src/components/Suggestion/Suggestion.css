@@ -1,5 +1,3 @@
-@import "../../variables.css";
-
 .no-comments-message {
   display: flex;
   margin-top: 0.25rem;
@@ -10,37 +8,9 @@
   font-style: italic;
 }
 
-.suggestion-wrapper {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  padding-top: 0.5rem;
-}
-
-.suggestion-comments {
-  flex: 1;
-  overflow-y: scroll;
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius-boxes);
-  padding: 0.25rem;
-  /* margin-bottom: 1rem; */
-}
-
-.suggestion-comments .list-group-item:first-child {
+.suggestion-comments .list-group-item {
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
-}
-
-.comment-input {
-  position: sticky;
-  bottom: 0;
-  z-index: 2;
-  background-color: white;
-  padding: 0.5rem;
-  height: 4rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .submit-comment-btn {

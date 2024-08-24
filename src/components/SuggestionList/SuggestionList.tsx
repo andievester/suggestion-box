@@ -10,7 +10,6 @@ import { useSuggestionListContext } from "../../contexts/SuggestionListContext";
 import { UserSuggestion } from "../../types/suggestion.interfaces";
 import { SuggestionGenerator } from "../../services/generate-suggestion.service";
 import localStorageService from "../../services/local-storage.service";
-import { suggestionService } from "../../services/suggestion.service";
 
 function SuggestionList({
   onSuggestionClick,
@@ -52,15 +51,15 @@ function SuggestionList({
   };
 
   return (
-    <div className="suggestion-list-wrapper">
-      <div className="suggestion-list-content">
+    <div className="scrollbox-wrapper">
+      <div className="scrollbox-content">
         <ListGroup>
           {suggestions.map((suggestion) => (
             <ListGroupItem
               key={suggestion.id}
-              className={`d-flex justify-content-between list-group-item-hover ${
+              className={`d-flex justify-content-between suggestion-list-group-item ${
                 activeSuggestionId === suggestion.id
-                  ? "list-group-item-active"
+                  ? "suggestion-list-group-item-active"
                   : ""
               }`}
               onClick={() => handleSuggestionClick(suggestion)}
@@ -75,7 +74,7 @@ function SuggestionList({
                   <strong>{suggestion.title}</strong>
                 </div>
                 <div>
-                  <span className="secondary-text">
+                  <span className="suggestion-timestamp">
                     {formatTimestamp(suggestion.timestamp)}
                   </span>
                 </div>
@@ -85,7 +84,7 @@ function SuggestionList({
           ))}
         </ListGroup>
       </div>
-      <div className="new-suggestion">
+      <div className="footer-actions">
         <NewSuggestionModal />
       </div>
     </div>

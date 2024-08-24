@@ -12,6 +12,13 @@
   font-size: 0.7rem;
 }
 
+.author-name {
+  margin-top: 0.2rem;
+  margin-left: 0.25rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
 .me-icon {
   color: var(--bs-primary);
 }

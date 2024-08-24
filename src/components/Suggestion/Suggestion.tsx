@@ -62,7 +62,6 @@ const Suggestion = () => {
         localStorageService.getSuggestions();
 
       setSuggestions(updatedSuggestionsList);
-
       setNewComment("");
       setShouldScroll(true);
     }
@@ -75,12 +74,12 @@ const Suggestion = () => {
   };
 
   return (
-    <div className="suggestion-wrapper">
+    <div className="scrollbox-wrapper">
       <div className="sticky-header">
         {selectedSuggestion && <h2>{selectedSuggestion.title}</h2>}
         {selectedSuggestion && <p>{selectedSuggestion.description}</p>}
       </div>
-      <div className="suggestion-comments">
+      <div className="scrollbox-content suggestion-comments">
         {selectedSuggestion?.comments.length === 0 ? (
           <p className="no-comments-message">No comments yet!</p>
         ) : (
@@ -95,7 +94,7 @@ const Suggestion = () => {
           </ListGroup>
         )}
       </div>
-      <div className="comment-input">
+      <div className="footer-actions">
         <InputGroup>
           <FormControl
             value={newComment}

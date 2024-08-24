@@ -1,49 +1,54 @@
-/* Import variables */
 @import "../../variables.css";
 
-.secondary-text {
-  margin-left: 0.25rem;
-  margin-top: 0.2rem;
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-}
-
-.suggestion-list-wrapper {
+.scrollbox-wrapper {
   display: flex;
   flex-direction: column;
   height: 100vh;
   padding-top: 0.5rem;
 }
 
-.suggestion-list-content {
+.scrollbox-content {
   flex: 1;
   overflow: scroll;
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-boxes);
-  /* margin-bottom: 1rem; */
 }
 
-.new-suggestion {
+.suggestion-timestamp {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.suggestion-list-group-item {
+  border-left: none !important;
+  border-right: none !important;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.suggestion-list-group-item:hover {
+  background-color: var(--bs-teal-super-opaque);
+  cursor: pointer;
+}
+
+.suggestion-list-group-item-active {
+  background-color: var(--bs-teal-medium-opaque) !important;
+}
+
+.suggestion-list-group-item:first-child {
+  border-top: none !important;
+}
+
+.suggestion-list-group-item:last-child {
+  border-bottom: none !important;
+}
+
+.footer-actions {
   position: sticky;
   bottom: 0;
   z-index: 2;
-  background-color: white;
   padding: 0.5rem;
   height: 4rem;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.list-group-item-hover {
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-
-.list-group-item-hover:hover {
-  background-color: var(--bs-teal-super-opaque);
-  cursor: pointer;
-}
-
-.list-group-item-active {
-  background-color: var(--bs-teal-medium-opaque) !important;
 }
