@@ -2,7 +2,7 @@ import { UserSuggestion, User } from "../types/suggestion.interfaces";
 import { faker } from "@faker-js/faker";
 import { generateId } from "../utils/data-format-utils";
 
-class SuggestionGenerator {
+class generateSuggestionService {
   static generateRandomUser(): User {
     return {
       id: generateId(),
@@ -25,4 +25,4 @@ class SuggestionGenerator {
   }
 }
 
-export { SuggestionGenerator };
+export default generateSuggestionService;

@@ -8,8 +8,8 @@ import Initials from "../Initials/Initials";
 import { formatTimestamp } from "../../utils/data-format-utils";
 import { useSuggestionListContext } from "../../contexts/SuggestionListContext";
 import { UserSuggestion } from "../../types/suggestion.interfaces";
-import { SuggestionGenerator } from "../../services/generate-suggestion.service";
 import { suggestionService } from "../../services/suggestion.service";
+import generateSuggestionService from "../../services/generate-suggestion.service";
 
 function SuggestionList({
   onSuggestionClick,
@@ -41,7 +41,7 @@ function SuggestionList({
 
   const addRandomSuggestion = () => {
     const newSuggestion: UserSuggestion =
-      SuggestionGenerator.generateRandomSuggestion();
+      generateSuggestionService.generateRandomSuggestion();
     addSuggestion(newSuggestion);
   };
 
