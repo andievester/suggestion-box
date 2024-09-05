@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSuggestionContext } from "../../contexts/SuggestionContext";
 import { Link } from "react-router-dom";
 import "./SuggestionList.css";
@@ -34,16 +34,16 @@ function SuggestionList({
     }
   }, [selectedSuggestion, suggestions]);
 
-  useEffect(() => {
-    const interval = setInterval(addRandomSuggestion, 300000);
-    return () => clearInterval(interval);
-  }, [addSuggestion]);
-
-  const addRandomSuggestion = () => {
+  const addRandomSuggestion = useCallback(() => {
     const newSuggestion: UserSuggestion =
       generateSuggestionService.generateRandomSuggestion();
     addSuggestion(newSuggestion);
-  };
+  }, [addSuggestion]);
+
+  useEffect(() => {
+    const interval = setInterval(addRandomSuggestion, 300000);
+    return () => clearInterval(interval);
+  }, [addRandomSuggestion]);
 
   const handleSuggestionClick = (suggestion: UserSuggestion) => {
     onSuggestionClick(suggestion);
